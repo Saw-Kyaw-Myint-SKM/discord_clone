@@ -1,5 +1,7 @@
 "use client";
 import * as z from "zod";
+import axios from "axios";
+import {useState}  from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -17,7 +19,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -34,6 +36,8 @@ const formSchema = z.object({
 });
 
 export const InitialModal = () => {
+  const [isMounted,setIsMounted]=useState(false);
+  const router=useRouter();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,7 +46,16 @@ export const InitialModal = () => {
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+   try {
+     await axios.post("/api/server",values)
+     form.reset();
+     router.refresh();
+     window.location.reload();
+   }catch (error) {
+     console.log(error)
+   }
+  };
   return (
     <Dialog open>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">

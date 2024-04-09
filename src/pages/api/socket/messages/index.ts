@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { NextApiResponseServerIo } from "../../../../types";
+import { NextApiResponseServerIo } from "../../../../../types";
 import { currentProfilePages } from "@/lib/current-profile-pages";
 import { db } from "@/lib/db";
 
@@ -50,6 +50,7 @@ export default async function handler(
         serverId: serverId as string,
       },
     });
+
     if (!channel) {
       return res.status(404).json({ message: "Channal not found" });
     }

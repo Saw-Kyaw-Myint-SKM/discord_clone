@@ -8,7 +8,7 @@ interface InviteCodePageProps {
     inviteCode: string;
   };
 }
-const InviteCodePage = async ({ params }: InviteCodePageProps) => {
+const InviteCodePage: React.FC<InviteCodePageProps> = async ({ params }) => {
   const profile = await currentProfile();
   if (!profile) {
     return redirectToSignIn();

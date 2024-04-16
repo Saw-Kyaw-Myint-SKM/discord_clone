@@ -8,6 +8,7 @@ import { ChatWelcome } from "@/components/chat/chat-welcome";
 import { useChatQuery } from "../../../hooks/use-chat-query";
 import { ChatItem } from "./chat-item";
 import { useChatSocket } from "../../../hooks/use-chat-socket";
+import { useChatScroll } from "../../../hooks/use-chat-scroll";
 const DATE_FORMAT = "d MMM yyy, HH:mm";
 type MessageWithMemberWithProfile = Message & {
   member: Member & {
@@ -54,7 +55,14 @@ export const ChatMessages = ({
       paramValue,
     });
 
-    useChatSocket({queryKey,addKey,updateKey})
+    useChatSocket({queryKey,addKey,updateKey});
+    useChatScroll({
+      chatRef,
+      bottomRef,
+      loadMore:fetchNextPage,
+      shouldLoadMore:!isFetchingNextPage && !!hasNextPage,
+      count:data?.pages?.[0]?.items?.length ?? 0
+    })
 
   // @ts-ignore
   if (isLoading) {

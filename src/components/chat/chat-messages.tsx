@@ -107,7 +107,7 @@ export const ChatMessages = ({
           )}
         </div>
       )}
-      <div className="flex-1" />
+      {/* <div className="flex-1" /> */}
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>
